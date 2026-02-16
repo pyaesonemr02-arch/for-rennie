@@ -1,0 +1,67 @@
+/* =========================================
+   ANIMATIONS.CSS
+   All animation effects live here
+========================================= */
+
+/* Fade In */
+.fade-in {
+    animation: fadeIn 2s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity:0; transform:translateY(20px); }
+    to { opacity:1; transform:translateY(0); }
+}
+
+/* Shake (Wrong Passcode) */
+.shake {
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0% { transform:translateX(0); }
+    25% { transform:translateX(-10px); }
+    50% { transform:translateX(10px); }
+    75% { transform:translateX(-10px); }
+    100% { transform:translateX(0); }
+}
+
+/* Glow Error */
+.error-glow {
+    box-shadow:0 0 15px red;
+}
+
+/* Floating Heart */
+@keyframes floatUp {
+    0% {
+        transform:translateY(0) scale(1);
+        opacity:1;
+    }
+    100% {
+        transform:translateY(-800px) scale(1.5);
+        opacity:0;
+    }
+}
+
+/* Typing Cursor */
+.typing::after {
+    content:"|";
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%,50%,100% { opacity:1; }
+    25%,75% { opacity:0; }
+}
+
+/* Section Scroll Animation */
+.section-hidden {
+    opacity:0;
+    transform:translateY(40px);
+    transition:all 1s ease;
+}
+
+.section-show {
+    opacity:1;
+    transform:translateY(0);
+}

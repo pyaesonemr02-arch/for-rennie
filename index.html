@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Rennie 💖</title>
+
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/cinematic.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Great+Vibes&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+<!-- 🔐 UNLOCK SCREEN -->
+<div id="unlockScreen" class="unlock-screen">
+    <div class="glass-card center">
+        <h1>For Rennie 💖</h1>
+        <input type="password" id="passcode" placeholder="Enter Secret Code">
+        <button id="unlockBtn">Unlock ❤️</button>
+        <p id="errorMsg"></p>
+    </div>
+</div>
+
+<!-- 🎬 CINEMATIC INTRO -->
+<div id="cinematicIntro" class="cinematic hidden">
+    <div class="cinematic-overlay">
+        <h1 class="fade-in">For Rennie 💖</h1>
+    </div>
+</div>
+
+<!-- 🎉 Confetti Canvas -->
+<canvas id="confettiCanvas"></canvas>
+
+<!-- 🌸 Floating Hearts Container -->
+<div id="heartsContainer"></div>
+
+<!-- 🎵 Music -->
+<audio id="bgMusic" src="assets/music.mp3" loop></audio>
+
+<!-- MAIN CONTENT -->
+<main id="mainContent" class="hidden">
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-overlay">
+        <h1>For Rennie 💖</h1>
+        <p>You are my everything</p>
+        <button id="startStory">Start Our Story</button>
+        <button onclick="toggleMusic()">🎵 Play / Pause Music</button>
+
+    </div>
+</section>
+
+<!-- COUNTDOWN -->
+<section class="center glass-card">
+    <h2>Time Since We Met ⏳</h2>
+    <div id="countdown"></div>
+</section>
+
+<!-- LOVE MESSAGES -->
+<section class="center glass-card">
+    <h2>My Words For You 💬</h2>
+    <div id="typingText"></div>
+</section>
+
+<!-- GALLERY -->
+<section class="center glass-card">
+    <h2>Our Memories 📸</h2>
+    <div class="gallery" id="gallery"></div>
+</section>
+
+<!-- LOVE CERTIFICATE -->
+<section class="center glass-card certificate">
+    <h2>Love Certificate 📜</h2>
+    <p>This certifies that <strong>Rennie</strong> is deeply loved by <strong>Pyae Sone Aung</strong></p>
+    <button id="downloadCert">Download PDF</button>
+    <button onclick="window.print()">Print</button>
+    <p class="signature">Signed: Pyae Sone Aung</p>
+</section>
+
+<!-- MINI GAME -->
+<section class="center glass-card">
+    <h2>Catch My Love 💘</h2>
+    <p>Score: <span id="score">0</span></p>
+    <button id="startGame">Start Game</button>
+</section>
+
+<!-- THEME TOGGLE -->
+<button id="themeToggle" class="theme-toggle">🌙</button>
+
+</main>
+
+<script src="js/unlock.js"></script>
+<script src="js/cinematic.js"></script>
+<script src="js/confetti.js"></script>
+<script src="js/hearts.js"></script>
+<script src="js/app.js"></script>
+<script src="js/countdown.js"></script>
+<script src="js/typing.js"></script>
+<script src="js/gallery.js"></script>
+<script src="js/certificate.js"></script>
+<script src="js/music.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/game.js"></script>
+<script src="js/cursor.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+</body>
+</html>

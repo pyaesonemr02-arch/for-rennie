@@ -1,0 +1,118 @@
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body {
+    background:black;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* Intro */
+#intro {
+    height:100vh;
+    background:url('assets/hero.jpg') center/cover no-repeat;
+    position:relative;
+}
+
+.overlay {
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+}
+
+.intro-content {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+}
+
+.cinematic-text {
+    font-size:2.5rem;
+    font-family:'Playfair Display',serif;
+    animation:fadeIn 3s ease-in-out;
+}
+
+button {
+    padding:12px 25px;
+    background:#ff0066;
+    border:none;
+    color:white;
+    border-radius:30px;
+    margin-top:20px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover {
+    background:#ff4da6;
+    transform:scale(1.1);
+}
+
+/* Hidden */
+.hidden { display:none; }
+
+/* Hero */
+.hero {
+    position:relative;
+    text-align:center;
+}
+
+.hero img {
+    width:100%;
+    height:100vh;
+    object-fit:cover;
+}
+
+.hero-text {
+    position:absolute;
+    top:40%;
+    width:100%;
+}
+
+#countdown {
+    font-size:1.5rem;
+    margin-top:10px;
+    color:#ff99cc;
+}
+
+/* Message */
+.message {
+    padding:50px 20px;
+    text-align:center;
+    background:#111;
+}
+
+/* Certificate */
+.certificate {
+    padding:50px 20px;
+    text-align:center;
+    background:#000;
+}
+
+@keyframes fadeIn {
+    from { opacity:0; }
+    to { opacity:1; }
+}
+
+.confetti {
+    position: fixed;
+    width: 8px;
+    height: 15px;
+    top: -10px;
+    animation: fall linear forwards;
+    z-index: 9999;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
