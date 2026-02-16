@@ -350,55 +350,6 @@ button:active {
   margin: 0 !important;
   padding: 0 !important;
 }
-/* Base (desktop-first): transparent glass + gradient ring */
-.hero-overlay {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-
-  /* Transparent glass look */
-  background: rgba(0, 0, 0, 0.10);
-  backdrop-filter: blur(22px) saturate(180%);
-  -webkit-backdrop-filter: blur(22px) saturate(180%);
-
-  padding: 40px 30px;
-  border-radius: 26px;
-
-  /* Romantic glow */
-  box-shadow:
-    0 10px 40px rgba(0,0,0,0.40),
-    0 0 25px rgba(255, 100, 200, 0.35),
-    0 0 40px rgba(255, 50, 150, 0.15) inset;
-
-  /* Soft inner border */
-  border: 1px solid rgba(255, 255, 255, 0.18);
-}
-
-/* Gradient border ring (outside the box, without covering the glass) */
-.hero-overlay::before {
-  content: "";
-  position: absolute;
-  inset: -2px;             /* expand 2px outside the card */
-  border-radius: 28px;     /* match radius + 2px */
-  padding: 2px;            /* ring thickness */
-
-  background: linear-gradient(
-    135deg,
-    #ff4e8a,
-    #c471f5,
-    #8a7dff,
-    #ff6ec4
-  );
-
-  /* Mask so only the ring shows (no fill over the card) */
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-
-  pointer-events: none;
-}
 
 /* Slightly lighter + tighter on small screens */
 @media (max-width: 480px) {
