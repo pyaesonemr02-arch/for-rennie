@@ -5,7 +5,7 @@
 const countdownEl = document.getElementById("countdown");
 
 // Change this date to your real anniversary
-const startDate = new Date("2023-01-01T00:00:00");
+const startDate = new Date("2024-06-06T00:00:00");
 
 function updateCountdown(){
     const now = new Date();
