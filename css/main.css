@@ -9,6 +9,7 @@
 }
 
 body {
+    height: 100%;
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg,#ff9a9e,#fad0c4,#fbc2eb,#a18cd1);
     min-height:100vh;
@@ -26,15 +27,92 @@ body {
     text-align:center;
 }
 
-/* Glass Card */
+/* ==========================
+   PREMIUM ROMANTIC GLASS CARD
+   ========================== */
+
 .glass-card {
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(15px);
-    padding:30px;
-    margin:20px;
-    border-radius:20px;
-    box-shadow:0 8px 30px rgba(0,0,0,0.2);
-    max-width:90%;
+    position: relative;
+    width: min(92%, 520px);
+
+    /* Glass look */
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+
+    /* Layout */
+    padding: 35px 28px;
+    margin: 25px auto;
+    border-radius: 24px;
+
+    /* Depth */
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.35),
+        0 0 22px rgba(255, 100, 200, 0.30);
+
+    border: 1px solid rgba(255, 255, 255, 0.28);
+
+    /* Smoothness */
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Hover effect */
+.glass-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.45),
+        0 0 28px rgba(255, 120, 200, 0.55);
+}
+
+
+/* Gradient Outline Ring */
+.glass-card::before {
+    content: "";
+    position: absolute;
+    inset: -2px;    
+    border-radius: inherit;
+    padding: 2px;
+
+    background: linear-gradient(
+        135deg,
+        #ff4e8a,
+        #c471f5,
+        #8a7dff,
+        #ff6ec4
+    );
+
+    -webkit-mask: 
+        linear-gradient(#000 0 0) content-box, 
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+
+    pointer-events: none;
+}
+
+/* Typography inside cards */
+.glass-card h1,
+.glass-card h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 14px;
+}
+
+.glass-card p {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    opacity: 0.95;
+    line-height: 1.6;
+}
+
+/* Signature (Great Vibes) */
+.glass-card .signature {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2rem;
+    margin-top: 18px;
+    color: #ffe3f1;
+    text-shadow: 0 4px 12px rgba(255, 100, 200, 0.6);
 }
 
 /* Hidden */
@@ -73,17 +151,76 @@ body {
 
 /* Hero */
 .hero {
-    background:url('../assets/hero.jpg') center/cover no-repeat;
-    height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    position: relative;
+    height: 100vh;
+    background: url('../assets/hero.jpg') center center / cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
 
+/* Cinematic dark overlay */
+/* HERO OVERLAY — ultra‑transparent + glass + gradient ring */
 .hero-overlay {
-    background:rgba(0,0,0,0.5);
-    padding:40px;
-    border-radius:20px;
+  position: relative;          /* needed for the ::before ring */
+  z-index: 2;
+  text-align: center;
+
+  /* Transparent glass look */
+  background: rgba(0, 0, 0, 0.00);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+
+  padding: 40px 30px;
+  border-radius: 26px;
+
+  /* Soft, romantic glow to match your theme */
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.40),
+    0 0 25px rgba(255, 100, 200, 0.35),
+    0 0 40px rgba(255, 50, 150, 0.15) inset;
+
+  /* A thin inner border for refinement (optional) */
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Gradient outline ring (outside the box, without covering the glass) */
+.hero-overlay::before {
+  content: "";
+  position: absolute;
+  inset: -2px;                          /* expand 2px outside the card */
+  border-radius: 28px;                  /* match radius + 2px */
+  padding: 2px;                         /* ring thickness */
+
+  /* Romantic gradient ring */
+  background: linear-gradient(
+    135deg,
+    #ff4e8a,
+    #c471f5,
+    #8a7dff,
+    #ff6ec4
+  );
+
+  /* Mask so only the ring shows (no fill over the card) */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  pointer-events: none;                 /* don’t block clicks */
+}
+
+/* Optional: gentle hover lift for desktop */
+@media (hover: hover) and (pointer: fine) {
+  .hero-overlay:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 14px 50px rgba(0, 0, 0, 0.46),
+      0 0 30px rgba(255, 120, 200, 0.50),
+      0 0 44px rgba(255, 50, 150, 0.18) inset;
+  }
 }
 
 .hero h1 {
@@ -106,4 +243,145 @@ body {
     border:none;
     background:white;
     cursor:pointer;
+}
+
+/* =========================================
+   ROMANTIC CINEMATIC BUTTON SYSTEM
+========================================= */
+
+button {
+    position: relative;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    color: white;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(10px);
+}
+
+/* Romantic Gradient */
+button {
+    background: linear-gradient(
+        45deg,
+        #ff4e8a,
+        #c471f5,
+        #ff6ec4,
+        #ff3c7d
+    );
+    background-size: 300% 300%;
+    box-shadow:
+        0 0 10px rgba(255, 100, 200, 0.5),
+        0 5px 20px rgba(0,0,0,0.3);
+}
+
+/* Soft Pulse */
+@keyframes romanticPulse {
+    0% { box-shadow: 0 0 10px rgba(255,100,200,0.5); }
+    50% { box-shadow: 0 0 25px rgba(255,100,200,0.9); }
+    100% { box-shadow: 0 0 10px rgba(255,100,200,0.5); }
+}
+
+button {
+    animation: romanticPulse 3s infinite;
+}
+
+/* Shine Effect */
+button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        rgba(255,255,255,0.1),
+        rgba(255,255,255,0.6),
+        rgba(255,255,255,0.1)
+    );
+    transform: skewX(-25deg);
+}
+
+/* Hover Shine Animation */
+button:hover::before {
+    left: 130%;
+    transition: 0.7s ease;
+}
+
+/* Hover Magic */
+button:hover {
+    transform: scale(1.08);
+    box-shadow:
+        0 0 25px rgba(255, 120, 200, 1),
+        0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* Active Press */
+button:active {
+    transform: scale(0.96);
+}
+
+/* Special Large Hero Button */
+.hero button {
+    font-size: 1.1rem;
+    padding: 16px 36px;
+}
+/* FIX: prevent overlays from pushing the hero down */
+#confettiCanvas,
+#heartsContainer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  display: block;
+}
+
+/* FIX: cinematic intro must disappear completely when hidden */
+#cinematicIntro.hidden {
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+/* --- HERO OVERLAY: mobile vs desktop tuning --- */
+
+/* Base (desktop-first): you already added the transparent style + gradient ring */
+.hero-overlay {
+  /* (Keep your final values) */
+  background: rgba(0, 0, 0, 0.10);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  padding: 40px 30px;
+  border-radius: 26px;
+  box-shadow:
+    0 10px 40px rgba(0,0,0,0.40),
+    0 0 25px rgba(255, 100, 200, 0.35),
+    0 0 40px rgba(255, 50, 150, 0.15) inset;
+}
+
+/* Slightly lighter + tighter on small screens */
+@media (max-width: 480px) {
+  .hero-overlay {
+    background: rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(20px) saturate(170%);
+    -webkit-backdrop-filter: blur(20px) saturate(170%);
+    padding: 28px 22px;
+    border-radius: 22px;
+    box-shadow:
+      0 8px 32px rgba(0,0,0,0.36),
+      0 0 20px rgba(255, 100, 200, 0.32),
+      0 0 34px rgba(255, 50, 150, 0.12) inset;
+  }
+}
+
+/* Add a little breathing room for very tall displays */
+@media (min-height: 900px) {
+  .hero-overlay { padding: 48px 34px; }
 }

@@ -1,20 +1,22 @@
 /* =========================================
-   LOVE CERTIFICATE PDF DOWNLOAD
+   DIRECT PDF DOWNLOAD + PRINT
 ========================================= */
 
-document.getElementById("downloadCert")
-.addEventListener("click",()=>{
+const downloadBtn = document.getElementById("downloadCert");
+const printBtn = document.getElementById("printCert");
 
-    const element = document.querySelector(".certificate");
+downloadBtn.addEventListener("click", () => {
+    triggerConfetti();
 
-    const opt = {
-        margin:1,
-        filename:"Love_Certificate_Rennie.pdf",
-        image:{ type:"jpeg", quality:0.98 },
-        html2canvas:{ scale:2 },
-        jsPDF:{ unit:"in", format:"letter", orientation:"portrait" }
+    const link = document.createElement("a");
+    link.href = "assets/love-certificate.pdf";
+    link.download = "Love_Certificate_Rennie.pdf";
+    link.click();
+});
+
+printBtn.addEventListener("click", () => {
+    const printWindow = window.open("assets/love-certificate.pdf");
+    printWindow.onload = function () {
+        printWindow.print();
     };
-
-    html2pdf().set(opt).from(element).save();
-
 });

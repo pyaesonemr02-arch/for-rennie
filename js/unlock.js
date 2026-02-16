@@ -12,23 +12,26 @@ unlockBtn.addEventListener("click", () => {
     const code = passcodeInput.value.trim();
 
     if(code === "676425") {
-        // 🎉 Success
-        triggerConfetti();
-        unlockScreen.style.opacity = "0";
 
-        setTimeout(() => {
-            unlockScreen.style.display = "none";
-            cinematicIntro.classList.remove("hidden");
+    triggerConfetti();
 
-            // After cinematic animation
-            setTimeout(() => {
-                cinematicIntro.style.display = "none";
-                document.getElementById("mainContent").classList.remove("hidden");
-            }, 6000);
+    unlockScreen.classList.add("fade-out");
 
-        }, 1000);
+    setTimeout(() => {
+        unlockScreen.style.display = "none";
 
-    } else {
+        cinematicIntro.classList.remove("hidden");
+
+        // Wait for animation to finish
+        cinematicIntro.addEventListener("animationend", () => {
+            cinematicIntro.style.display = "none";
+            document.getElementById("mainContent")
+            .classList.remove("hidden");
+        }, { once: true });
+
+    }, 800);
+}
+ else {
         // ❌ Wrong
         passcodeInput.classList.add("shake","error-glow");
         errorMsg.innerText = "Wrong passcode 💔";

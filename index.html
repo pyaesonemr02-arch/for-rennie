@@ -17,7 +17,7 @@
 <!-- 🔐 UNLOCK SCREEN -->
 <div id="unlockScreen" class="unlock-screen">
     <div class="glass-card center">
-        <h1>For Rennie 💖</h1>
+        <h1 class="for-rennie-title">For Rennie 💖</h1>
         <input type="password" id="passcode" placeholder="Enter Secret Code">
         <button id="unlockBtn">Unlock ❤️</button>
         <p id="errorMsg"></p>
@@ -46,13 +46,24 @@
 <!-- HERO -->
 <section class="hero">
     <div class="hero-overlay">
-        <h1>For Rennie 💖</h1>
-        <p>You are my everything</p>
-        <button id="startStory">Start Our Story</button>
-        <button onclick="toggleMusic()">🎵 Play / Pause Music</button>
+        <h1 class="hero-title">
+            Rennie, My Lovely A Thel Tone 💖
+        </h1>
 
+        <p class="hero-subtitle">
+            Thankyou for still chosing me as your boyfriend.
+        </p>
+
+        <button id="startStory">
+            💖 Begin Our Beautiful Story
+        </button>
+
+        <button onclick="toggleMusic()">
+            🎵 Play / Pause Music
+        </button>
     </div>
 </section>
+
 
 <!-- COUNTDOWN -->
 <section class="center glass-card">
@@ -74,10 +85,14 @@
 
 <!-- LOVE CERTIFICATE -->
 <section class="center glass-card certificate">
-    <h2>Love Certificate 📜</h2>
-    <p>This certifies that <strong>Rennie</strong> is deeply loved by <strong>Pyae Sone Aung</strong></p>
-    <button id="downloadCert">Download PDF</button>
-    <button onclick="window.print()">Print</button>
+    <h2>Certificate 📜</h2>
+    <p>This certifies that <strong>Rennie</strong> got best girlfriend award from <strong>Pyae Sone Aung</strong></p>
+    <button id="downloadCert">
+📜 Download Your Award Certificate
+</button>
+    <button id="printCert">
+🖨 Print Your Eternal Award
+</button>
     <p class="signature">Signed: Pyae Sone Aung</p>
 </section>
 
@@ -106,7 +121,6 @@
 <script src="js/theme.js"></script>
 <script src="js/game.js"></script>
 <script src="js/cursor.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 </body>
 </html>

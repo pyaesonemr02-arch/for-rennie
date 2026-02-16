@@ -65,3 +65,42 @@
     opacity:1;
     transform:translateY(0);
 }
+button {
+    animation:
+        romanticPulse 3s infinite,
+        gradientFlow 6s ease infinite;
+}
+
+@keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+.signature {
+    overflow:hidden;
+    white-space:nowrap;
+    border-right:2px solid white;
+    width:0;
+    animation: typingSign 4s steps(40,end) forwards,
+               blink 1s infinite;
+}
+
+@keyframes typingSign {
+    from { width:0; }
+    to { width:100%; }
+}
+/* --- HERO OVERLAY ENTRANCE --- */
+.hero-enter {
+  opacity: 0;
+  transform: translateY(14px) scale(0.98);
+  filter: saturate(120%);
+  animation: heroEnter 650ms ease forwards 100ms; /* tiny delay after page paint */
+}
+
+@keyframes heroEnter {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: saturate(160%);
+  }
+}
