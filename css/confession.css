@@ -9,9 +9,11 @@
   --gold-2: #ffedae;
   --gold-3: #fff4cf;
   --max-width: 28rem;
-  --enter-dur: 1600ms;
+  /* was 1600ms */
+  --enter-dur: 2400ms;
   --enter-ease: cubic-bezier(.22,.61,.36,1);
 }
+
 
 * { box-sizing: border-box; }
 html, body { height: 100%; }
@@ -90,23 +92,23 @@ body {
   background-clip: text;
   color: transparent;
   text-shadow: 0 0 12px rgba(255,213,106,.25);
-  animation: shimmerSlide 2600ms ease-in-out 600ms both;
+  animation: shimmerSlide 3600ms ease-in-out 600ms both;
 }
 
 /* Entrance animation */
 @keyframes confessEnter {
   0% {
     opacity: 0;
-    transform: translateY(26px);
-    filter: blur(8px) saturate(110%);
+    transform: translateY(28px);     /* a touch more lift */
+    filter: blur(9px) saturate(110%); /* a touch more blur */
   }
-  60% {
+  70% {                               /* was 60% */
     opacity: .98;
     transform: translateY(0);
-    filter: blur(0.5px) saturate(120%);
+    filter: blur(0.6px) saturate(120%);
   }
   100% {
-    opacity:1;
+    opacity: 1;
     transform: translateY(0);
     filter: blur(0) saturate(120%);
   }
