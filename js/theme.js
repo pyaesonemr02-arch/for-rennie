@@ -1,19 +1,23 @@
 /* =========================================
-   THEME TOGGLE
+   THEME TOGGLE (system-aware + persist)
 ========================================= */
+(function () {
+  const btn = document.getElementById("themeToggle");
+  if (!btn) return;
 
-const themeBtn = document.getElementById("themeToggle");
+  const KEY = "psa_theme";
+  function apply(mode) {
+    if (mode === "dark") { document.body.classList.add("theme-dark"); btn.textContent = "☀️"; }
+    else { document.body.classList.remove("theme-dark"); btn.textContent = "🌙"; }
+  }
 
-let darkMode = false;
+  let mode = localStorage.getItem(KEY) ||
+             (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  apply(mode);
 
-themeBtn.addEventListener("click",()=>{
-    darkMode = !darkMode;
-
-    if(darkMode){
-        document.body.style.background = "linear-gradient(135deg,#1e1e2f,#2b2b4f)";
-        themeBtn.innerText = "☀️";
-    } else {
-        document.body.style.background = "linear-gradient(135deg,#ff9a9e,#fad0c4,#fbc2eb,#a18cd1)";
-        themeBtn.innerText = "🌙";
-    }
-});
+  btn.addEventListener("click", () => {
+    mode = mode === "dark" ? "light" : "dark";
+    apply(mode);
+    localStorage.setItem(KEY, mode);
+  });
+})();

@@ -1,43 +1,24 @@
 /* =========================================
-   MINI HEART CLICK GAME
+   BACKGROUND MUSIC CONTROLLER
 ========================================= */
 
-const scoreEl = document.getElementById("score");
-const startGameBtn = document.getElementById("startGame");
+const bgMusic = document.getElementById("bgMusic");
 
-let score = 0;
-let gameInterval;
+let musicPlaying = false;
 
-startGameBtn.addEventListener("click",()=>{
-    score = 0;
-    scoreEl.innerText = score;
-
-    gameInterval = setInterval(()=>{
-        spawnHeart();
-    },800);
-
-    setTimeout(()=>{
-        clearInterval(gameInterval);
-        alert("Game Over 💖 Final Score: "+score);
-    },10000);
-});
-
-function spawnHeart(){
-    const heart = document.createElement("div");
-    heart.innerHTML = "💘";
-    heart.style.position="fixed";
-    heart.style.left=Math.random()*100+"vw";
-    heart.style.top=Math.random()*100+"vh";
-    heart.style.fontSize="30px";
-    heart.style.cursor="pointer";
-
-    heart.onclick=()=>{
-        score++;
-        scoreEl.innerText=score;
-        heart.remove();
-    };
-
-    document.body.appendChild(heart);
-
-    setTimeout(()=>heart.remove(),2000);
+function toggleMusic() {
+    if(musicPlaying){
+        bgMusic.pause();
+        musicPlaying = false;
+    } else {
+        bgMusic.play();
+        musicPlaying = true;
+    }
 }
+
+document.addEventListener("click",()=>{
+    // Allow autoplay after interaction
+    if(!musicPlaying){
+        bgMusic.volume = 0.5;
+    }
+});

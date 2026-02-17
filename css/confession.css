@@ -1,0 +1,128 @@
+/* ================================
+   CONFESSION — MOBILE-FIRST STYLES
+================================ */
+:root{
+  --bg: #0b0a0f;
+  --text: #fff;
+  --glow: rgba(255, 172, 236, 0.20);
+  --gold-1: #ffd56a;
+  --gold-2: #ffedae;
+  --gold-3: #fff4cf;
+  --max-width: 28rem;
+  --enter-dur: 1600ms;
+  --enter-ease: cubic-bezier(.22,.61,.36,1);
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+html.no-scroll, body.no-scroll { height: 100%; overflow: hidden; }
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  color: var(--text);
+  background: radial-gradient(1200px 800px at 50% 50%, #1b1624 0%, #100d16 45%, var(--bg) 100%);
+}
+
+/* Stage container */
+.stage {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  padding-left: max(24px, env(safe-area-inset-left));
+  padding-right: max(24px, env(safe-area-inset-right));
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+  isolation: isolate;
+}
+
+/* Cinematic lighting */
+.vignette {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 40% at 50% 40%, rgba(255,180,230,.10), transparent 60%),
+    radial-gradient(120% 90% at 50% 60%, transparent 55%, rgba(0,0,0,.55) 100%);
+  filter: saturate(110%);
+}
+
+/* Particle canvas */
+#particles {
+  position: absolute; inset: 0;
+  z-index: -1;
+}
+
+/* Paragraph container */
+.centerpiece {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--max-width);
+}
+
+.confession-paragraph {
+  margin: 0;
+  font-size: clamp(1.05rem, 3.8vw, 1.4rem);
+  line-height: 1.75;
+  letter-spacing: 0.2px;
+  text-align: center;
+  text-wrap: balance;
+
+  opacity: 0;
+  transform: translateY(26px);
+  filter: blur(8px) saturate(110%);
+  animation: confessEnter var(--enter-dur) var(--enter-ease) forwards;
+
+  text-shadow:
+    0 2px 18px rgba(255, 100, 200, .18),
+    0 0 24px var(--glow);
+}
+
+/* Gold shimmer effect */
+.shimmer {
+  display: inline-block;
+  background: linear-gradient(90deg, rgba(255,255,255,.2),
+    var(--gold-2), var(--gold-1), var(--gold-3),
+    rgba(255,255,255,.2));
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 12px rgba(255,213,106,.25);
+  animation: shimmerSlide 2600ms ease-in-out 600ms both;
+}
+
+/* Entrance animation */
+@keyframes confessEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(26px);
+    filter: blur(8px) saturate(110%);
+  }
+  60% {
+    opacity: .98;
+    transform: translateY(0);
+    filter: blur(0.5px) saturate(120%);
+  }
+  100% {
+    opacity:1;
+    transform: translateY(0);
+    filter: blur(0) saturate(120%);
+  }
+}
+
+/* Shimmer animation */
+@keyframes shimmerSlide {
+  0%   { background-position: 200% 0; }
+  50%  { background-position: 50% 0; }
+  100% { background-position: 0% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confession-paragraph,
+  .shimmer {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

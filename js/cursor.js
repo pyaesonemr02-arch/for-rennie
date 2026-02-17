@@ -1,18 +1,35 @@
 /* =========================================
-   CURSOR HEART TRAIL
+   CURSOR HEART TRAIL (throttled + touch-safe)
 ========================================= */
+(function () {
+  const isTouch = matchMedia("(pointer: coarse)").matches;
+  if (isTouch) return; // disable by default on phones/tablets
 
-document.addEventListener("mousemove",(e)=>{
+  let last = 0;
+  document.addEventListener("mousemove", (e) => {
+    const now = performance.now();
+    if (now - last < 40) return; // ~25 fps throttle
+    last = now;
+
     const heart = document.createElement("div");
-    heart.innerHTML="💗";
-    heart.style.position="fixed";
-    heart.style.left=e.clientX+"px";
-    heart.style.top=e.clientY+"px";
-    heart.style.pointerEvents="none";
-    heart.style.fontSize="15px";
-    heart.style.opacity="0.8";
-
+    heart.textContent = "💗";
+    Object.assign(heart.style, {
+      position: "fixed",
+      left: e.clientX + "px",
+      top: e.clientY + "px",
+      transform: "translate(-50%,-50%)",
+      pointerEvents: "none",
+      fontSize: "15px",
+      opacity: "0.85",
+      transition: "transform .5s ease, opacity .5s ease",
+      willChange: "transform, opacity",
+      zIndex: 9999
+    });
     document.body.appendChild(heart);
-
-    setTimeout(()=>heart.remove(),500);
-});
+    requestAnimationFrame(() => {
+      heart.style.transform = "translate(-50%,-80%) scale(1.15)";
+      heart.style.opacity = "0";
+    });
+    setTimeout(() => heart.remove(), 500);
+  });
+})();

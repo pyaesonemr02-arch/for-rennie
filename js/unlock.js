@@ -1,44 +1,59 @@
-/* =========================================
-   UNLOCK SYSTEM
-========================================= */
+/* UNLOCK SYSTEM (mobile-safe + resilient) */
+(function () {
+  const unlockBtn       = document.getElementById("unlockBtn");
+  const passcodeInput   = document.getElementById("passcode");
+  const unlockScreenEl  = document.getElementById("unlockScreen");
+  const cinematicIntro  = document.getElementById("cinematicIntro");
+  const errorMsg        = document.getElementById("errorMsg");
+  const mainContent     = document.getElementById("mainContent");
 
-const unlockBtn = document.getElementById("unlockBtn");
-const passcodeInput = document.getElementById("passcode");
-const unlockScreen = document.getElementById("unlockScreen");
-const cinematicIntro = document.getElementById("cinematicIntro");
-const errorMsg = document.getElementById("errorMsg");
+  const PASSCODE = "676425";
+  let unlocking = false;
 
-unlockBtn.addEventListener("click", () => {
-    const code = passcodeInput.value.trim();
+  function fadeOut(el, dur = 400) {
+    el.style.transition = `opacity ${dur}ms ease`;
+    el.style.opacity = "0";
+    return new Promise(res => setTimeout(res, dur));
+  }
 
-    if(code === "676425") {
+  function runCinematicThenShowMain() {
+    cinematicIntro.classList.remove("hidden");
 
-    triggerConfetti();
+    let done = false;
 
-    unlockScreen.classList.add("fade-out");
+    const finish = () => {
+      if (done) return;
+      done = true;
+      cinematicIntro.style.display = "none";
+      mainContent.classList.remove("hidden");
+      document.body.classList.add("no-bg");
+    };
 
-    setTimeout(() => {
-        unlockScreen.style.display = "none";
+    cinematicIntro.addEventListener("animationend", finish, { once: true });
+    setTimeout(finish, 3800);
+  }
 
-        cinematicIntro.classList.remove("hidden");
+  async function doUnlock() {
+    if (unlocking) return;
+    unlocking = true;
 
-        // Wait for animation to finish
-        cinematicIntro.addEventListener("animationend", () => {
-            cinematicIntro.style.display = "none";
-            document.getElementById("mainContent")
-            .classList.remove("hidden");
-        }, { once: true });
-
-    }, 800);
-}
- else {
-        // ❌ Wrong
-        passcodeInput.classList.add("shake","error-glow");
-        errorMsg.innerText = "Wrong passcode 💔";
-
-        setTimeout(() => {
-            passcodeInput.classList.remove("shake","error-glow");
-            errorMsg.innerText = "";
-        }, 800);
+    if (passcodeInput.value.trim() === PASSCODE) {
+      await fadeOut(unlockScreenEl);
+      unlockScreenEl.style.display = "none";
+      runCinematicThenShowMain();
+    } else {
+      passcodeInput.classList.add("shake","error-glow");
+      errorMsg.textContent = "Wrong passcode 💔";
+      setTimeout(() => {
+        passcodeInput.classList.remove("shake","error-glow");
+        errorMsg.textContent = "";
+        unlocking = false;
+      }, 800);
     }
-});
+  }
+
+  unlockBtn.addEventListener("click", doUnlock);
+  passcodeInput.addEventListener("keydown", e => {
+    if (e.key === "Enter") doUnlock();
+  });
+})();
