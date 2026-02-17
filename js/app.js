@@ -1,4 +1,4 @@
-// js/app.js
 document.getElementById("startStory")?.addEventListener("click", () => {
-  window.location.href = "confession.html";
+  try { typeof triggerConfetti === "function" && triggerConfetti(900, 100); } catch {}
+  setTimeout(() => { window.location.href = "confession.html"; }, 800);
 });
