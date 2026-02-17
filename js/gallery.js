@@ -1,13 +1,20 @@
 /* =========================================
-   SIMPLE SLIDESHOW GALLERY
+   Minimal Cross‑Fade Gallery (3s per photo)
+   - Two stacked <img> layers
+   - Cross-fade + tiny drift
+   - Keeps border/ratio fixed by CSS
 ========================================= */
+(function () {
+  const gallery = document.getElementById("gallery");
+  if (!gallery) return;
 
-const gallery = document.getElementById("gallery");
+  // Prevent double init
+  if (gallery.dataset.init === "1") return;
+  gallery.dataset.init = "1";
 
-const images = [
+  const images = [
     "assets/hero.jpg",
     "assets/back.jpg",
-    "assets/hero.jpg",
     "assets/back1.jpg",
     "assets/back2.jpg",
     "assets/back3.jpg",
@@ -22,21 +29,44 @@ const images = [
     "assets/back12.jpg",
     "assets/back13.jpg",
     "assets/back14.jpg",
-];
+  ];
 
-let currentSlide = 0;
+  // Build two layers once
+  gallery.innerHTML = "";
+  const a = document.createElement("img");
+  const b = document.createElement("img");
+  gallery.appendChild(a);
+  gallery.appendChild(b);
 
-function renderGallery(){
-    gallery.innerHTML = `
-        <img src="${images[currentSlide]}" 
-             style="width:100%;border-radius:15px;transition:all 0.5s;">
-    `;
-}
+  let current = 0;
+  let showA = true;
 
-function nextSlide(){
-    currentSlide = (currentSlide+1)%images.length;
-    renderGallery();
-}
+  // Paint first image instantly
+  a.src = images[current];
+  a.classList.add("is-active");
 
-setInterval(nextSlide,3000);
-renderGallery();
+  function next() {
+    current = (current + 1) % images.length;
+
+    const active = showA ? b : a;   // the one we are going to fade in
+    const idle   = showA ? a : b;   // the one currently visible
+
+    // Preload next, then cross-fade
+    const img = new Image();
+    img.src = images[current];
+    img.onload = () => {
+      active.src = img.src;
+      // reset start pose to ensure the transform animates
+      active.classList.remove("is-active");
+      // next frame: fade in active, fade out idle
+      requestAnimationFrame(() => {
+        idle.classList.remove("is-active");
+        active.classList.add("is-active");
+        showA = !showA;
+      });
+    };
+  }
+
+  // 3s display + ~0.7s transition (feel free to tweak)
+  setInterval(next, 3000);
+})();

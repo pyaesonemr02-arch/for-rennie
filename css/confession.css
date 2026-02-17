@@ -29,13 +29,13 @@ body {
 /* Stage container */
 .stage {
   position: relative;
-  min-height: 100svh;
+  min-height: 100svh;           /* full mobile viewport height */
   display: grid;
-  place-items: center;
-  padding: 24px;
-  padding-left: max(24px, env(safe-area-inset-left));
-  padding-right: max(24px, env(safe-area-inset-right));
-  padding-bottom: max(24px, env(safe-area-inset-bottom));
+  place-items: center;          /* perfect vertical + horizontal center */
+  padding: 16px;                /* tighter than before so it doesn't push up */
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
   isolation: isolate;
 }
 
@@ -61,7 +61,15 @@ body {
   z-index: 1;
   width: 100%;
   max-width: var(--max-width);
+  margin: 0 auto;               /* explicit horizontal centering */
+  text-align: center;           /* ensure text is centered */
 }
+
+.confession-paragraph {
+  margin: 0;                    /* remove stray top margins */
+  /* keep your existing font-size/line-height/animation settings */
+}
+
 
 .confession-paragraph {
   margin: 0;
@@ -95,6 +103,8 @@ body {
   animation: shimmerSlide 3600ms ease-in-out 600ms both;
 }
 
+
+
 /* Entrance animation */
 @keyframes confessEnter {
   0% {
@@ -127,4 +137,57 @@ body {
     animation-duration: 1ms !important;
     animation-iteration-count: 1 !important;
   }
+}
+
+/* ================================
+   Back to Home button (centered, 3-line spacing)
+================================ */
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Center the button under the paragraph */
+  margin-left: auto;
+  margin-right: auto;
+
+  /* NEW: ~1.5 line gap instead of 3 lines */
+  margin-top: 1.5lh;             /* modern browsers: exactly 1.5 line-heights */
+  margin-top: calc(1.5 * 1.75em);/* fallback: approximates your 1.75 line-height */
+
+  /* keep your visual styles below */
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 999px;
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: #fff;
+  background: linear-gradient(45deg, rgba(255,78,138,.85), rgba(196,113,245,.85), rgba(255,110,196,.85));
+  background-size: 300% 300%;
+  box-shadow: 0 6px 18px rgba(0,0,0,.35), 0 0 18px rgba(255,100,200,.35);
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform .25s ease, box-shadow .25s ease, background-position .8s ease;
+}
+
+.btn-back:hover {
+  transform: translateY(-1px);
+  background-position: 100% 0;
+  box-shadow:
+    0 10px 26px rgba(0,0,0,.45),
+    0 0 24px rgba(255,120,200,.55);
+}
+
+.btn-back:active { transform: scale(.98); }
+
+.btn-back:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+.confession-outro {
+  animation: pageFadeOut 700ms ease forwards;
+}
+@keyframes pageFadeOut {
+  0%   { opacity: 1; filter: saturate(120%) blur(0); }
+  100% { opacity: 0; filter: saturate(140%) blur(6px); }
 }

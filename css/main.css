@@ -120,33 +120,67 @@ body {
     display:none;
 }
 
-/* Unlock Screen */
+/* =========================================
+   UNLOCK SCREEN — perfect centering + mobile-safe height
+========================================= */
 .unlock-screen {
-    position:fixed;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.9);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:9999;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  /* Grid centers more robustly than flex when combined with absolute children */
+  display: grid;
+  place-items: center;
+
+  /* Modern viewport height (handles mobile URL bar) */
+  min-height: 100dvh;
+
+  /* Cinematic background (your chosen palette) */
+  background: radial-gradient(
+    1600px 900px at 50% 48%,
+    #1a1422 0%,
+    #110e18 50%,
+    #0b0a0f 100%
+  );
+
+  /* Safe areas (iOS notch) */
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+  padding-top: max(16px, env(safe-area-inset-top));
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
+
+  overflow: hidden;
 }
 
-.unlock-screen input {
-    padding:12px;
-    margin:15px 0;
-    border:none;
-    border-radius:10px;
-    text-align:center;
+/* Background layers behind the card */
+#unlockParticles {               /* canvas is absolutely positioned; removed from grid flow */
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  display: block;
 }
 
-.unlock-screen button {
-    padding:12px 20px;
-    border:none;
-    border-radius:20px;
-    background:linear-gradient(45deg,#ff6ec4,#7873f5);
-    color:white;
-    cursor:pointer;
+.unlock-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;                    /* above canvas, below card */
+  pointer-events: none;
+  background:
+    radial-gradient(60% 45% at 50% 40%, rgba(255,180,230,.12), transparent 60%),
+    radial-gradient(120% 90% at 50% 60%, transparent 55%, rgba(0,0,0,.55) 100%);
+  filter: saturate(110%);
+}
+
+/* Keep your glass-card above backgrounds, and ensure centering/width look right */
+.unlock-screen .glass-card {
+  position: relative;
+  z-index: 2;
+  margin: 0;                     /* grid takes care of vertical centering */
+  width: min(92%, 520px);        /* your original card width */
+  max-width: 520px;
 }
 
 /* Hero */
@@ -416,4 +450,222 @@ button:active {
   .hero-subtitle {
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
   }
+}
+/* Premium, fixed gallery frame */
+.gallery {
+  position: relative;
+  width: 100%;
+
+  /* Primary sizing */
+  aspect-ratio: 4 / 5;          /* change to 1/1 or 16/9 if you prefer */
+
+  /* Fallback for older browsers that ignore aspect-ratio */
+  height: auto;
+  min-height: 260px;            /* ✅ guarantees the frame is visible */
+  /* If you want a stronger fallback instead of min-height:
+     height: calc(100vw * 5 / 4);  // 4:5 ratio based on viewport width
+  */
+
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.06);
+  box-shadow:
+    0 6px 18px rgba(0,0,0,.25),
+    0 0 14px rgba(255,100,200,.25) inset;
+
+  transform: translateZ(0);
+}
+
+.gallery {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;     /* or 1/1, 16/9 — your choice */
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.08);
+  box-shadow:
+    0 6px 18px rgba(0,0,0,.25),
+    0 0 14px rgba(255,100,200,.25) inset;
+  transform: translateZ(0);
+}
+.gallery__layer {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  transition: transform 700ms cubic-bezier(.22,.61,.36,1); /* match SLIDE_MS */
+}
+.gallery__layer--incoming { transform: translateX(100%); }
+.gallery__layer--active   { transform: translateX(0%); }
+.gallery__img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  display: block;
+  will-change: transform, opacity;
+}
+.gallery__img--kenburns {
+  transform-origin: center center;
+  transition: transform 4800ms ease-in-out;
+}
+
+/* --- Minimal cross-fade layers (keeps your fixed frame & corners) --- */
+.gallery {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;       /* or 1/1, 16/9 as you like */
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.gallery img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;          /* fill without distortion */
+  border-radius: inherit;     /* obey the frame's corners */
+  opacity: 0;
+  transform: translateY(8px) scale(1.01);  /* tiny drift for polish */
+  transition: opacity 700ms cubic-bezier(.22,.61,.36,1),
+              transform 700ms cubic-bezier(.22,.61,.36,1);
+  display: block;
+}
+
+.gallery img.is-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+/* ================================
+   UNLOCK CARD — Senior Designer Polish
+   Works with your existing markup:
+   #unlockScreen .glass-card .for-rennie-title
+   input#passcode, button#unlockBtn
+================================ */
+
+/* Card: gentle glass, inner gradient sheen, refined ring */
+.unlock-screen .glass-card {
+  /* you already set width in previous patch; keep it */
+  padding: 36px 28px;                 /* slightly tighter vertical padding */
+  background: rgba(20, 16, 28, 0.42); /* deeper glass to match background */
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 20px 50px rgba(0,0,0,0.45),
+    0 0 28px rgba(255, 120, 200, 0.35) inset; /* inner soft glow */
+
+  position: relative;
+  overflow: hidden; /* keep any focus glow inside rounded edges */
+}
+
+/* Optional: subtle top sheen inside the card */
+.unlock-screen .glass-card::after {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.06), transparent 28%),
+    radial-gradient(80% 50% at 50% 0%, rgba(255,255,255,0.06), transparent 70%);
+  pointer-events: none;
+}
+
+/* Title */
+.unlock-screen .for-rennie-title {
+  font-size: clamp(1.6rem, 5.4vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  margin: 0 0 16px 0;                 /* balanced space above input */
+  text-shadow: 0 2px 14px rgba(255,120,200,0.35);
+}
+
+/* Stack spacing inside the card */
+.unlock-screen .glass-card .center {
+  gap: 14px;                           /* if you keep .center wrapper */
+}
+
+/* Input: full-width, glass, no default bevel */
+#passcode {
+  width: min(100%, 360px);
+  padding: 12px 14px;
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 12px;
+
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font-size: 1rem;
+  line-height: 1.2;
+
+  outline: none;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.08) inset,
+    0 8px 24px rgba(0,0,0,0.28);
+  transition: box-shadow .25s ease, border-color .25s ease, background .25s ease;
+}
+
+/* Placeholder color */
+#passcode::placeholder { color: rgba(255,255,255,0.6); }
+
+/* Focus: soft brand glow */
+#passcode:focus {
+  border-color: rgba(255, 150, 220, 0.6);
+  box-shadow:
+    0 0 0 3px rgba(255,150,220,0.24),
+    0 8px 28px rgba(0,0,0,0.34);
+  background: rgba(255,255,255,0.12);
+}
+
+/* Error feedback you already toggle via .error-glow/.shake remains compatible */
+
+/* Button: keep your gradient but refine padding, font, and glow */
+#unlockBtn {
+  width: min(100%, 240px);
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: 0;
+
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: .2px;
+  color: #fff;
+
+  background: linear-gradient(45deg, #ff4e8a, #c471f5, #ff6ec4);
+  background-size: 200% 200%;
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.4),
+    0 0 18px rgba(255, 120, 200, 0.45);
+
+  transition: transform .18s ease, box-shadow .25s ease, background-position .8s ease;
+}
+
+/* Hover/active */
+#unlockBtn:hover {
+  transform: translateY(-1px);
+  background-position: 100% 0;
+  box-shadow:
+    0 14px 36px rgba(0,0,0,0.46),
+    0 0 24px rgba(255, 140, 210, 0.55);
+}
+
+#unlockBtn:active {
+  transform: translateY(0);
+  box-shadow:
+    0 10px 28px rgba(0,0,0,0.42),
+    0 0 18px rgba(255, 120, 200, 0.45);
+}
+
+/* Accessibility: keyboard focus ring */
+#unlockBtn:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+/* Fine-tune vertical rhythm for the trio (title, input, button) */
+#passcode { margin-top: 6px; }
+#unlockBtn { margin-top: 6px; }
+
+/* Small screens: tighten spacing slightly */
+@media (max-width: 380px) {
+  .unlock-screen .glass-card { padding: 28px 20px; }
+  #unlockBtn { width: 100%; }
 }

@@ -16,6 +16,10 @@
 
 <!-- 🔐 UNLOCK SCREEN -->
 <div id="unlockScreen" class="unlock-screen">
+    <!-- ✨ Background layers for the Unlock screen -->
+  <canvas id="unlockParticles" aria-hidden="true"></canvas>
+  <div class="unlock-vignette" aria-hidden="true"></div>
+
     <div class="glass-card center">
         <h1 class="for-rennie-title">For Rennie 💖</h1>
         <input type="password" id="passcode" placeholder="Enter Secret Code">
@@ -47,11 +51,11 @@
 <section class="hero">
     <div class="hero-overlay hero-enter">
         <h1 class="hero-title">
-            Rennie, My Lovely A Thel Tone 💖
+            Welcome, My Lovely A Thel Tone 💖
         </h1>
 
         <p class="hero-subtitle">
-            Thankyou for still chosing me as your boyfriend.
+            Thank You for still chosing me as your boyfriend.
         </p>
 
         <a href="confession.html" style="text-decoration:none;">
@@ -81,8 +85,8 @@
 
 <!-- GALLERY -->
 <section class="center glass-card">
-    <h2>Our Memories 📸</h2>
-    <div class="gallery" id="gallery"></div>
+  <h2>Our Memories 📷</h2>
+  <div id="gallery" class="gallery"></div>
 </section>
 
 <!-- LOVE CERTIFICATE -->
@@ -111,6 +115,7 @@
 </main>
 
 <script src="js/unlock.js"></script>
+<script src="js/unlock-bg.js"></script>
 <script src="js/cinematic.js"></script>
 <script src="js/confetti.js"></script>
 <script src="js/hearts.js"></script>

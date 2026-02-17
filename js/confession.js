@@ -106,3 +106,19 @@
   window.addEventListener('resize', resize);
   document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
 })();
+
+// Back to Home
+const back = document.getElementById('backHome');
+if (back) {
+  back.addEventListener('click', () => {
+    // Make sure home auto-skips the unlock next time
+    localStorage.setItem("psa_unlocked", "1");
+
+    // Optional: small cinematic outro
+    document.body.classList.add('confession-outro');
+
+    setTimeout(() => {
+      window.location.assign('index.html'); // adjust path if needed
+    }, 680);
+  }, { passive: true });
+}
